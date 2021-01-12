@@ -1,0 +1,420 @@
+// PSX Doom status bar recreation by Dragonsbrethren
+Height 32;
+MonospaceFonts true, "0";
+Resolution 256, 240;
+
+MugShot "XDeath"
+{
+	EXP0 4;
+	EXP1 4;
+	EXP2 4;
+	EXP3 4;
+	EXP4 4;
+	EXP5 -1;
+}
+
+StatusBar Normal
+{
+	DrawImage "HUDBAR", 0, 208;
+
+	DrawNumber 3, BIGFONT, Untranslated, Ammo1, 39, 212;
+	DrawNumber 3, BIGFONT, Untranslated, Health, 82, 212;
+	DrawNumber 3, BIGFONT, Untranslated, Armor, 179, 212;
+
+	/* PSX Doom has "combined" key icons in multiplayer by displaying the skulls
+		on top of the cards */
+	DrawSwitchableImage keyslot 1, "", "HUDKEYS2", 100, 212;
+	DrawSwitchableImage keyslot 2, "", "HUDKEYS0", 100, 220;
+	DrawSwitchableImage keyslot 3, "", "HUDKEYS1", 100, 228;
+
+	DrawSwitchableImage keyslot 4, "", "HUDKEYS5", 102, 212;
+	DrawSwitchableImage keyslot 5, "", "HUDKEYS3", 102, 220;
+	DrawSwitchableImage keyslot 6, "", "HUDKEYS4", 102, 228;
+
+	DrawMugshot 5, XDeathFace, 111, 208;
+
+	GameMode deathmatch, teamgame
+	{
+		/* Offsets guessed from YouTube video - the "FRAG" text is not lined up
+			with the other status bar text for some reason */
+		DrawImage "HUDFRAG", 208, 229;
+
+		DrawNumber 3, BIGFONT, Untranslated, Frags, 234, 212;
+	}
+
+	GameMode cooperative, singleplayer
+	{
+		DrawImage "HUDARMS", 195, 213;
+
+		DrawSwitchableImage Shot_Gun,			"", "HUDNUM3", 223, 215;
+		DrawSwitchableImage SSG,				"", "HUDNUM3", 223, 215;
+
+		DrawSwitchableImage MiniGun,			"", "HUDNUM4", 235, 215;
+
+		DrawSwitchableImage Rocket_Launcher,	"", "HUDNUM5", 247, 215;
+		DrawSwitchableImage GrenadeLauncher,	"", "HUDNUM5", 247, 215;
+
+		DrawSwitchableImage RailGun,			"", "HUDNUM6", 199, 227;
+		DrawSwitchableImage Plasma_Gun,			"", "HUDNUM6", 199, 227;
+
+		DrawSwitchableImage BFG10K,				"", "HUDNUM7", 211, 227;
+		DrawSwitchableImage BIG_FUCKING_GUN,		"", "HUDNUM7", 211, 227;
+
+		DrawSwitchableImage HellishMissileLauncher,	"", "HUDNUM8", 223, 227;
+
+		DrawSwitchableImage FlameCannon,			"", "HUDNUM9", 235, 227;
+
+		DrawSwitchableImage MP40,		"", "HUDNUM0", 247, 227;
+		DrawSwitchableImage HandGrenades, "", "HUDNUM0", 247, 277;
+
+		// Handles drawing the box around the selected weapon.
+		IsSelected Chain_Saw, Melee_Attacks
+		{
+			DrawImage "HUDWEAP", 195, 212;
+		}
+		IsSelected BDPistol, MP40
+		{
+			DrawImage "HUDWEAP", 206, 212;
+		}
+		IsSelected Shot_Gun, SSG
+		{
+			DrawImage "HUDWEAP", 218, 212;
+		}
+		IsSelected Rifle, MiniGun, HitlersBuzzsaw
+		{
+			DrawImage "HUDWEAP", 230, 212;
+		}
+		IsSelected HandGrenades, Rocket_Launcher
+		{
+			DrawImage "HUDWEAP", 242, 212;
+		}
+
+		IsSelected Plasma_Gun
+		{
+			DrawImage "HUDWEAP", 195, 224;
+		}
+		IsSelected BIG_FUCKING_GUN
+		{
+			DrawImage "HUDWEAP", 206, 224;
+		}
+		IsSelected HellishMissileLauncher
+		{
+			DrawImage "HUDWEAP", 218, 224;
+		}
+		IsSelected FlameCannon
+		{
+			DrawImage "HUDWEAP", 230, 224;
+		}
+		IsSelected SoulCube, AEoDDemonMorphHand
+		{
+			DrawImage "HUDWEAP", 242, 224;
+		}
+	}
+}
+
+// ZDoom's fullscreen HUD with the PSX font.
+statusbar fullscreen, fullscreenoffsets
+{
+	drawimage "MEDIA0", 20, -2, centerbottom;
+	drawnumber 2147483647, BIGFONT, untranslated, health, drawshadow, 73, -20;
+
+	drawimage armoricon, 20, -24, centerbottom;
+	drawnumber 2147483647, BIGFONT, untranslated, armor, drawshadow, whennotzero, 73, -39;
+
+	drawimage ammoicon1, -14, -4, centerbottom;
+	drawnumber 2147483647, BIGFONT, untranslated, ammo1, drawshadow, -25, -20;
+
+	usesammo
+	{
+		usessecondaryammo
+		{
+			drawimage ammoicon2, -14, -22, centerbottom;
+			drawnumber 2147483647, BIGFONT, untranslated, ammo2, drawshadow, -25, -38;
+			inventorybarnotvisible
+			{
+				drawselectedinventory centerbottom, drawshadow, alwaysshowcounter, BIGFONT, -14, -39, -26, -56, untranslated;
+			}
+		}
+		else
+		{
+			inventorybarnotvisible
+			{
+				drawselectedinventory centerbottom, drawshadow, alwaysshowcounter, BIGFONT, -14, -21, -26, -38, untranslated;
+			}
+		}
+	}
+	else
+	{
+		inventorybarnotvisible
+		{
+			drawselectedinventory centerbottom, drawshadow, alwaysshowcounter, BIGFONT, -14, -3, -26, -20, untranslated;
+		}
+	}
+
+	gamemode deathmatch
+	{
+		drawnumber 2147483647, BIGFONT, untranslated, frags, drawshadow, -3, 1;
+	}
+	else
+	{
+		drawkeybar 100, vertical, reverserows, auto, -12, 2, 0, 3, 12;
+	}
+}
+
+
+// PSX Doom status bar recreation by Dragonsbrethren
+Height 32;
+MonospaceFonts true, "0";
+Resolution 256, 240;
+
+MugShot "XDeath"
+{
+    EXP0 4;
+    EXP1 4;
+    EXP2 4;
+    EXP3 4;
+    EXP4 4;
+    EXP5 -1;
+//  NULL -1;
+}
+
+StatusBar Normal
+{
+    DrawSwitchableImage IsFinalDoom, "HUDBAR", "HUDBARFD", 0, 208;
+    
+    InInventory IsFinalDoom, 1
+    {
+        DrawNumber 3, FBIGFONT, Untranslated, Ammo1, 39, 212;
+        DrawNumber 3, FBIGFONT, Untranslated, Health, 82, 212;
+        DrawNumber 3, FBIGFONT, Untranslated, Armor, 179, 212;
+    }
+    else
+    {
+        DrawNumber 3, BIGFONT, Untranslated, Ammo1, 39, 212;
+        DrawNumber 3, BIGFONT, Untranslated, Health, 82, 212;
+        DrawNumber 3, BIGFONT, Untranslated, Armor, 179, 212;
+    }
+    
+    /* PSX Doom has "combined" key icons in multiplayer by displaying the skulls
+        on top of the cards */
+    DrawSwitchableImage keyslot 1, "", "HUDKEYS2", 100, 212;
+    DrawSwitchableImage keyslot 2, "", "HUDKEYS0", 100, 220;
+    DrawSwitchableImage keyslot 3, "", "HUDKEYS1", 100, 228;
+    
+    DrawSwitchableImage keyslot 4, "", "HUDKEYS5", 102, 212;
+    DrawSwitchableImage keyslot 5, "", "HUDKEYS3", 102, 220;
+    DrawSwitchableImage keyslot 6, "", "HUDKEYS4", 102, 228;
+    
+    DrawMugshot 5, XDeathFace, 118, 210;
+    
+    GameMode deathmatch, teamgame
+    {
+        /* Offsets guessed from YouTube video - the "FRAG" text is not lined up
+            with the other status bar text for some reason */
+        /* MG_Man: But this is kinda dumb so I fixed it! I highly doubt it was
+            intended anyways. */
+        DrawSwitchableImage IsFinalDoom,"HUDFRAG","HUDFRGFD", 208, 229;
+        
+        InInventory IsFinalDoom, 1
+        {
+            DrawNumber 3, FBIGFONT, Untranslated, frags, 234, 212;
+        }
+        else
+        {
+            DrawNumber 3, BIGFONT, Untranslated, frags, 234, 212;
+        }
+    }
+    
+    GameMode cooperative, singleplayer
+    {
+        DrawSwitchableImage IsFinalDoom, "HUDARMS", "HUDARMFD", 200, 213;
+        
+        /* Acquired weapons are drawn based on their inventory item rather than
+            slots - this is so the slots don't need to be shifted from their PC
+            defaults to replicate the PSX bar's numbering. */
+        DrawSwitchableImage Shot_Gun,           "", "HUDNUM3", 223, 215;
+        DrawSwitchableImage SSG,                "", "HUDNUM3", 223, 215;
+
+        DrawSwitchableImage Rifle,            "", "HUDNUM4", 235, 215;
+        DrawSwitchableImage MiniGun,            "", "HUDNUM4", 235, 215;
+
+        DrawSwitchableImage Rocket_Launcher,    "", "HUDNUM5", 247, 215;
+        DrawSwitchableImage HandGrenades,    "", "HUDNUM5", 247, 215;
+
+        DrawSwitchableImage Plasma_Gun,         "", "HUDNUM6", 199, 227;
+
+        DrawSwitchableImage BIG_FUCKING_GUN,        "", "HUDNUM7", 211, 227;
+
+        DrawSwitchableImage HellishMissileLauncher, "", "HUDNUM8", 223, 227;
+
+        DrawSwitchableImage FlameCannon,            "", "HUDNUM9", 235, 227;
+
+        DrawSwitchableImage MP40,       "", "HUDNUM0", 247, 227;
+        DrawSwitchableImage HandGrenades, "", "HUDNUM0", 247, 277;
+
+        // Handles drawing the box around the selected weapon.
+        IsSelected Chain_Saw, Melee_Attacks
+        {
+            DrawImage "HUDWEAP", 195, 212;
+        }
+        IsSelected BDPistol, MP40
+        {
+            DrawImage "HUDWEAP", 206, 212;
+        }
+        IsSelected Shot_Gun, SSG
+        {
+            DrawImage "HUDWEAP", 218, 212;
+        }
+        IsSelected Rifle, MiniGun, HitlersBuzzsaw
+        {
+            DrawImage "HUDWEAP", 230, 212;
+        }
+        IsSelected HandGrenades, Rocket_Launcher
+        {
+            DrawImage "HUDWEAP", 242, 212;
+        }
+
+        IsSelected Plasma_Gun
+        {
+            DrawImage "HUDWEAP", 195, 224;
+        }
+        IsSelected BIG_FUCKING_GUN
+        {
+            DrawImage "HUDWEAP", 206, 224;
+        }
+        IsSelected HellishMissileLauncher
+        {
+            DrawImage "HUDWEAP", 218, 224;
+        }
+        IsSelected FlameCannon
+        {
+            DrawImage "HUDWEAP", 230, 224;
+        }
+        IsSelected SoulCube, AEoDDemonMorphHand
+        {
+            DrawImage "HUDWEAP", 242, 224;
+		}
+    }
+}
+
+//Fullscreen HUD for PSX Doom
+statusbar fullscreen, fullscreenoffsets, 1.0
+{
+    drawSwitchableimage IsFinalDoom, "HUDBAMMO", "HUDFAMMO", 7, -10;
+    drawSwitchableimage IsFinalDoom, "HUDBHP", "HUDFHP", 52, -10;
+    drawSwitchableimage IsFinalDoom, "HUDBARMR", "HUDFARMR", -106, -10;
+    
+    InInventory IsFinalDoom, 1
+    {
+        DrawNumber 3, FBIGFONT, Untranslated, Ammo1, 39, -27;
+        DrawNumber 3, FBIGFONT, Untranslated, Health, 82, -27;
+        DrawString FBIGFONT, Untranslated, "%", 93, -27;
+        DrawNumber 3, FBIGFONT, Untranslated, Armor, -77, -27;
+        DrawString FBIGFONT, Untranslated, "%", -66, -27;
+    }
+    else
+    {
+        DrawNumber 3, BIGFONT, Untranslated, Ammo1, 39, -27;
+        DrawNumber 3, BIGFONT, Untranslated, Health, 82, -27;
+        DrawString BIGFONT, Untranslated, "%", 93, -27;
+        DrawNumber 3, BIGFONT, Untranslated, Armor, -77, -27;
+        DrawString BIGFONT, Untranslated, "%", -66, -27;
+    }
+    
+    GameMode deathmatch, teamgame
+    {
+        /* Offsets guessed from YouTube video - the "FRAG" text is not lined up
+            with the other status bar text for some reason */
+        /* MG_Man: But this is kinda dumb so I fixed it! I highly doubt it was
+            intended anyways. */
+        DrawSwitchableImage IsFinalDoom,"HUDFRGF","HUDFRFFD", -48, -10;
+        
+        InInventory IsFinalDoom, 1
+        {
+            DrawNumber 3, FBIGFONT, Untranslated, frags, -15, -27;
+        }
+        else
+        {
+            DrawNumber 3, BIGFONT, Untranslated, frags, -15, -27;
+        }
+    }
+    
+    GameMode cooperative, singleplayer
+    {
+        alpha 0.5
+        {
+            DrawSwitchableImage IsFinalDoom, "HUDARMS", "HUDARMFD", -56, -26;
+                    
+            DrawSwitchableImage Shot_gun,           "", "HUDNUM3", -26, -24;
+            DrawswitchableImage SSG,                "", "HUDNUM3", -26, -24;
+            
+            DrawswitchableImage Rifle,              "", "HUDNUM4", -13, -24;
+            DrawSwitchableImage MiniGun,            "", "HUDNUM4", -13, -24;
+            
+            DrawSwitchableImage HandGrenades,    "", "HUDNUM5", -52, -12;
+            DrawSwitchableImage Rocket_Launcher,    "", "HUDNUM5", -52, -12;
+            
+            DrawSwitchableImage Plasma_Gun,         "", "HUDNUM6", -39, -12;
+            
+            DrawSwitchableImage BIG_FUCKING_GUN,    "", "HUDNUM7", -26, -12;
+            
+            DrawSwitchableImage HellishMissileLauncher,         "", "HUDNUM8", -13, -12;
+            DrawSwitchableImage FlameCannon,            "", "HUDNUM8", -13, -12;
+		}
+        
+        alpha 0.6
+        {
+            IsSelected Melee_Attacks, Chain_saw
+            {
+                DrawImage "HUDWEAP", -57, -27;
+            }
+            IsSelected BDPistol, MP40
+            {
+                DrawImage "HUDWEAP", -44, -27;
+            }
+            IsSelected Shot_Gun, SSG
+            {
+                DrawImage "HUDWEAP", -31, -27;
+            }
+            IsSelected Rifle, Minigun, HitlersBuzzsaw
+            {
+                DrawImage "HUDWEAP", -18, -27;
+            }
+            IsSelected GrenadeLauncher, Rocket_Launcher
+            {
+                DrawImage "HUDWEAP", -5, -27;
+            }
+            IsSelected Plasma_Gun
+            {
+                DrawImage "HUDWEAP", -57, -15;
+            }
+            IsSelected BIG_FUCKING_GUN
+            {
+                DrawImage "HUDWEAP", -44, -15;
+            }
+            IsSelected HellishMissileLauncher
+            {
+                DrawImage "HUDWEAP", -31, -15;
+			}
+			IsSelected FlameCannon
+			{
+			    DrawImage "HUDWEAP", -18, -15;
+			}
+			IsSelected SoulCube, AEoDDemonMorphHand
+			{
+			    DrawImage "HUDWEAP", -5, -15;
+			}
+        }
+    }
+    
+    alpha 0.5
+    {
+        DrawSwitchableImage keyslot 1, "", "HUDKEYS2", 100, -28;
+        DrawSwitchableImage keyslot 2, "", "HUDKEYS0", 100, -19;
+        DrawSwitchableImage keyslot 3, "", "HUDKEYS1", 100, -10;
+        
+        DrawSwitchableImage keyslot 4, "", "HUDKEYS5", 102, -28;
+        DrawSwitchableImage keyslot 5, "", "HUDKEYS3", 102, -19;
+        DrawSwitchableImage keyslot 6, "", "HUDKEYS4", 102, -10;
+    }
+}

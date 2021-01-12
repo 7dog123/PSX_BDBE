@@ -1,0 +1,63 @@
+// Decorate
+
+//Enemies
+#include NIGHTMAREIMPS.txt
+#include NIGHTMARESPECTRE.txt
+#include NIGHTMAREFIRE.txt
+#include NIGHTMAREFLARES.txt
+#include "PSXBloodyChain.txt"
+#include "Spawnerscript.txt"
+
+//Gore N' Blood
+#include NIGHTMAREGORE!!!.txt
+#include NIGHTMAREGORE2.txt
+#include NIGHTMAREGORE3.txt
+#include NIGHTMAREBLOOD.txt
+#include BURNNIGHTMARE.txt
+
+// Tokens
+
+Actor HasNightmareImpShield : Inventory
+{
+inventory.maxamount 1
+}
+
+Actor SKNightmareImp : Inventory
+{
+inventory.maxamount 1
+}
+
+Actor NightmareImpFatality : Inventory
+{
+inventory.maxamount 1
+}
+
+Actor NightmareImpFatality2 : Inventory
+{
+inventory.maxamount 1
+}
+
+Actor NightmareSpectreFatality : Inventory
+{
+inventory.maxamount 1
+}
+
+Actor NightmareSpectreFatality2 : Inventory
+{
+inventory.maxamount 1
+}
+
+Actor NightmareSpectreFatality3 : Inventory
+{
+inventory.maxamount 1
+}
+
+Actor GrabbedANightmareImp : Inventory
+{
+inventory.maxamount 1
+}
+
+Actor IsFinalDoom : Inventory
+{
+inventory.maxamount 1
+}

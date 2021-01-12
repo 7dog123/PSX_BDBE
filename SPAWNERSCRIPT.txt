@@ -1,0 +1,5 @@
+Actor ImpReplacer : RandomSpawner 3001
+{
+	DropItem "Imp", 255, 120
+	DropItem "NightmareImp", 255, 130
+}
