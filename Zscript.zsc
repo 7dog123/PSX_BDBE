@@ -1,4 +1,4 @@
-version "4.5"
+version "4.8"
 
 #include "bezscripts/BaseNightmareImp.zsc"
 #include "bezscripts/Flares2.zsc"
